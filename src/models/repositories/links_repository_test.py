@@ -8,17 +8,22 @@ trip_id = str(uuid.uuid4())
 link_id = str(uuid.uuid4())
 
 
-@pytest.mark.skip(reason="interacao com o banco")
+# @pytest.mark.skip(reason="interacao com o banco")
 def test_register_link():
     conn = db_connection_handler.get_connection()
     links_repository = LinksRepository(conn)
 
-    link_infos = {"id": link_id, "trip_id": trip_id, "link": "www.foobar.com"}
+    link_infos = {
+        "id": link_id,
+        "trip_id": trip_id,
+        "link": "www.foobar.com",
+        "title": "foobar",
+    }
 
     links_repository.register_link(link_infos)
 
 
-@pytest.mark.skip(reason="interacao com o banco")
+# @pytest.mark.skip(reason="interacao com o banco")
 def test_find_links_from_trip():
     conn = db_connection_handler.get_connection()
     links_repository = LinksRepository(conn)
