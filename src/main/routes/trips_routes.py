@@ -42,7 +42,7 @@ def find_trip(tripId):
     return jsonify(response["body"]), response["status_code"]
 
 
-@trips_routes_bp.route("/trips/<tripId>/confirm", methods=["PUT"])
+@trips_routes_bp.route("/trips/<tripId>/confirm", methods=["PATCH"])
 def confirm_trip(tripId):
     conn = db_connection_handler.get_connection()
     trip_repository = TripsRepository(conn)
@@ -75,11 +75,12 @@ def find_links_from_trip(tripId):
     return jsonify(response["body"]), response["status_code"]
 
 
-@trips_routes_bp.route("/trips/<tripId>/participant", methods=["POST"])
-def create_participant(tripId):
+@trips_routes_bp.route("/trips/<tripId>/participants", methods=["POST"])
+def invite_to_trip(tripId):
     conn = db_connection_handler.get_connection()
     participants_repository = ParticipantsRepository(conn)
-    controller = ParticipantCreator(participants_repository)
+    emails_repository = EmailsToInviteRepository(conn)
+    controller = ParticipantCreator(participants_repository, emails_repository)
 
     response = controller.create(request.json, tripId)
 
@@ -97,7 +98,7 @@ def find_participants_from_trip(tripId):
     return jsonify(response["body"]), response["status_code"]
 
 
-@trips_routes_bp.route("/trips/participant/<participantId>/confirm", methods=["PUT"])
+@trips_routes_bp.route("/participants/<participantId>/confirm", methods=["PATCH"])
 def confirm_participant(participantId):
     conn = db_connection_handler.get_connection()
     participants_repository = ParticipantsRepository(conn)
