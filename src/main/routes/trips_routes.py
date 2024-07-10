@@ -42,7 +42,7 @@ def find_trip(tripId):
     return jsonify(response["body"]), response["status_code"]
 
 
-@trips_routes_bp.route("/trips/<tripId>/confirm", methods=["PATCH"])
+@trips_routes_bp.route("/trips/<tripId>/confirm", methods=["GET"])
 def confirm_trip(tripId):
     conn = db_connection_handler.get_connection()
     trip_repository = TripsRepository(conn)
@@ -98,7 +98,7 @@ def find_participants_from_trip(tripId):
     return jsonify(response["body"]), response["status_code"]
 
 
-@trips_routes_bp.route("/participants/<participantId>/confirm", methods=["PATCH"])
+@trips_routes_bp.route("/participants/<participantId>/confirm", methods=["GET"])
 def confirm_participant(participantId):
     conn = db_connection_handler.get_connection()
     participants_repository = ParticipantsRepository(conn)
